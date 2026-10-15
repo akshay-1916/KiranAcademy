@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #234;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        input, select, button {
+            padding: 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            padding: 8px 12px;
+        }
+
+        .delete-btn:hover {
+            background-color: #a71d2a;
+        }
+
+        #message {
+            text-align: center;
+            color: #16803c;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Employee Management System</h1>
+
+    <h2>Add Employee</h2>
+
+    <form id="employeeForm">
+
+        <input type="number" id="empId"
+               placeholder="Employee ID" min="1" required>
+
+        <input type="text" id="empName"
+               placeholder="Employee Name" required>
+
+        <select id="empRole" required>
+            <option value="">Select Role</option>
+            <option value="Developer">Developer</option>
+            <option value="Tester">Tester</option>
+            <option value="Manager">Manager</option>
+            <option value="HR">HR</option>
+            <option value="Designer">Designer</option>
+        </select>
+
+        <input type="number" id="empSalary"
+               placeholder="Salary" min="0" step="0.01" required>
+
+        <button type="submit">Add Employee</button>
+
+    </form>
+
+    <p id="message" role="status"></p>
+
+    <h2>Employee Details</h2>
+
+    <div class="table-container">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Salary (₹)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="employeeTable">
+                <!-- Employee records appear here -->
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<script>
+    const employeeForm = document.getElementById("employeeForm");
+    const employeeTable = document.getElementById("employeeTable");
+    const message = document.getElementById("message");
+
+    const employees = new Map();
+
+    employeeForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const id = document.getElementById("empId").value.trim();
+        const name = document.getElementById("empName").value.trim();
+        const role = document.getElementById("empRole").value;
+        const salary = document.getElementById("empSalary").value;
+
+        if (!name || !role || salary === "" ||
+            Number(id) < 1 || Number(salary) < 0) {
+            message.style.color = "red";
+            message.textContent = "Please enter valid employee details.";
+            return;
+        }
+
+        if (employees.has(id)) {
+            message.style.color = "red";
+            message.textContent = "Employee ID already exists!";
+            return;
+        }
+
+        const employee = {
+            id: id,
+            name: name,
+            role: role,
+            salary: Number(salary)
+        };
+
+        employees.set(id, employee);
+
+        displayEmployees();
+
+        employeeForm.reset();
+
+        message.style.color = "green";
+        message.textContent = "Employee added successfully!";
+    });
+
+    function displayEmployees() {
+        employeeTable.replaceChildren();
+
+        employees.forEach(function(employee) {
+            const row = document.createElement("tr");
+
+            [employee.id, employee.name, employee.role,
+             employee.salary.toLocaleString("en-IN", {
+                 minimumFractionDigits: 2,
+                 maximumFractionDigits: 2
+             })].forEach(function(value) {
+                const cell = document.createElement("td");
+                cell.textContent = value;
+                row.appendChild(cell);
+            });
+
+            const actionCell = document.createElement("td");
+            const deleteButton = document.createElement("button");
+
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-btn";
+
+            deleteButton.addEventListener("click", function() {
+                employees.delete(employee.id);
+                displayEmployees();
+
+                message.style.color = "green";
+                message.textContent = "Employee deleted successfully!";
+            });
+
+            actionCell.appendChild(deleteButton);
+            row.appendChild(actionCell);
+
+            employeeTable.appendChild(row);
+        });
+    }
+</script>
+
+</body>
+</html>
