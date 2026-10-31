@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recruitment & Placement System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>Recruitment &amp; Placement System</h1>
+    <nav>
+        <a href="#candidates">Candidates</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#apply">Apply</a>
+        <a href="#reports">Reports</a>
+    </nav>
+</header>
+<main>
+    <section id="candidates">
+        <h2>Add Candidate</h2>
+        <form>
+            <label>Name <input type="text" placeholder="Full name"></label>
+            <label>Email <input type="email" placeholder="name@example.com"></label>
+            <label>Mobile <input type="text" maxlength="10" placeholder="10 digit mobile"></label>
+            <label>Technology
+                <select><option>Java</option><option>Python</option><option>Testing</option></select>
+            </label>
+            <label>Percentage <input type="number" min="0" max="100" step="0.01"></label>
+            <label>Passing Year <input type="number" min="2000" max="2100"></label>
+            <label>Backlogs <input type="number" min="0" value="0"></label>
+            <button type="button">Save Candidate</button>
+        </form>
+    </section>
+    <section id="jobs">
+        <h2>Open Jobs</h2>
+        <table>
+            <tr><th>ID</th><th>Company</th><th>Title</th><th>Package</th><th>Min %</th><th>Deadline</th><th>Status</th></tr>
+            <tr><td>101</td><td>Infosys</td><td>Java Developer</td><td>4.5 LPA</td><td>60</td><td>2027-12-31</td><td>OPEN</td></tr>
+            <tr><td>102</td><td>TCS</td><td>Software Engineer</td><td>3.6 LPA</td><td>55</td><td>2027-12-31</td><td>OPEN</td></tr>
+            <tr><td>103</td><td>Persistent</td><td>Python Developer</td><td>6.0 LPA</td><td>70</td><td>2027-12-31</td><td>OPEN</td></tr>
+        </table>
+    </section>
+    <section id="apply">
+        <h2>Apply for Job</h2>
+        <form>
+            <label>Candidate ID <input type="number"></label>
+            <label>Job ID <input type="number"></label>
+            <button type="button">Check Eligibility</button>
+            <button type="button">Apply</button>
+        </form>
+        <p class="result">Result: ELIGIBLE</p>
+    </section>
+    <section id="reports">
+        <h2>Reports</h2>
+        <ul>
+            <li>Candidates by Technology</li>
+            <li>Open Jobs</li>
+            <li>Applications by Status</li>
+            <li>Company-wise Placements</li>
+            <li>Placed Candidates</li>
+            <li>Unplaced Candidates</li>
+        </ul>
+    </section>
+</main>
+<footer>Kiran Academy - Java Project</footer>
+</body>
+</html>

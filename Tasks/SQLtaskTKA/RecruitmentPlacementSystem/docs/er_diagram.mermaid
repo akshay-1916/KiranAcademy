@@ -1,0 +1,81 @@
+erDiagram
+    COMPANIES ||--o{ JOBS : posts
+    CANDIDATES ||--o{ APPLICATIONS : submits
+    JOBS ||--o{ APPLICATIONS : receives
+    APPLICATIONS ||--o{ INTERVIEWS : has
+    APPLICATIONS ||--o| OFFERS : results_in
+    APPLICATIONS ||--o| PLACEMENTS : ends_as
+    CANDIDATES ||--o{ PLACEMENTS : gets
+    COMPANIES ||--o{ PLACEMENTS : hires
+
+    COMPANIES {
+        int company_id PK
+        varchar name
+        varchar industry
+        varchar location
+        varchar email
+    }
+    CANDIDATES {
+        int candidate_id PK
+        varchar name
+        varchar email UK
+        char mobile UK
+        varchar technology
+        decimal percentage
+        int passing_year
+        int backlogs
+        tinyint active
+    }
+    JOBS {
+        int job_id PK
+        int company_id FK
+        varchar title
+        varchar technology
+        int openings
+        varchar location
+        decimal package_lpa
+        decimal min_percentage
+        int passing_year
+        int max_backlogs
+        date deadline
+        varchar status
+    }
+    APPLICATIONS {
+        int application_id PK
+        int candidate_id FK
+        int job_id FK
+        varchar status
+        date applied_date
+    }
+    INTERVIEWS {
+        int interview_id PK
+        int application_id FK
+        int round_no
+        date interview_date
+        varchar mode
+        varchar interviewer
+        varchar status
+        int technical_rating
+        int communication_rating
+        varchar remarks
+        varchar result
+    }
+    OFFERS {
+        int offer_id PK
+        int application_id FK
+        varchar designation
+        decimal package_lpa
+        date offer_date
+        date joining_date
+        varchar status
+    }
+    PLACEMENTS {
+        int placement_id PK
+        int application_id FK
+        int candidate_id FK
+        int company_id FK
+        varchar designation
+        decimal final_package
+        date joining_date
+        varchar joining_status
+    }
